@@ -1,5 +1,5 @@
 name: Reproduce
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 defaults:
   run:
     shell: bash
@@ -8,16 +8,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        fruit: [apple, pear]
+        fruit:
+          - name: apple
+            color: red
+          - name: pear
+            color: green
         animal:
-          - { name: cat, sound: meow }
-          - { name: dog, sound: woof }
+          - name: cat
+            sound: meow
+          - name: dog
+            sound: bark
         include:
-          - fruit: banana
-            animal: { name: cow, sound: moo }
+          - fruit:
+              name: banana
+              color: yellow
+            animal:
+              name: cow
+              sound: moo
     steps:
-      - name: Print fruit and animal
+      - name: Print Matrix Values
         run: |
-          echo "Fruit: ${{ matrix.fruit }}"
+          echo "Fruit: ${{ matrix.fruit.name }} is ${{ matrix.fruit.color }}"
           echo "Animal: ${{ matrix.animal.name }} makes sound: ${{ matrix.animal.sound }}"
-          echo "Full animal info: ${{ toJson(matrix.animal) }}"
+          echo "Matrix: ${{ toJson(matrix) }}"
