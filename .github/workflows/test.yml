@@ -10,10 +10,8 @@ jobs:
       matrix:
         fruit: [apple, pear]
         animal:
-          - name: cat
-            sound: meow
-          - name: dog
-            sound: bark
+          - { name: cat, sound: meow }
+          - { name: dog, sound: woof }
         include:
           - fruit: banana
             animal: { name: cow, sound: moo }
