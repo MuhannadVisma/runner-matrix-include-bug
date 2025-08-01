@@ -25,8 +25,8 @@ jobs:
             mood: playful
         include:
           - fruit:
-              name: banana
-              color: yellow
+              name: pear
+              color: green
             animal:
               name: cow
               sound: moo
