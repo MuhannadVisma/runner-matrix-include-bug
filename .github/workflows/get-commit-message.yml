@@ -1,0 +1,22 @@
+name: Get commit message
+on:
+  workflow_run:
+    workflows:
+      - Reproduce
+    types:
+      - completed
+defaults: { run: { shell: bash } }
+jobs:
+  get-commit-message:
+    runs-on: ubuntu-latest
+    outputs:
+      COMMIT_MESSAGE: ${{ steps.get-commit-message.outputs.COMMIT_MESSAGE }}
+    steps:
+      - name: Get commit message
+        id: get-commit-message
+        run: |
+          COMMIT_MESSAGE=$(echo '${{ github.event.workflow_run.head_commit.message }}' | head -n 1)
+          echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> "$GITHUB_OUTPUT"
+      - name: Print commit message
+        run: |
+          echo "Commit message: ${{ steps.get-commit-message.outputs.COMMIT_MESSAGE }}"
